@@ -29,6 +29,12 @@ version = "2022.04"
 project {
 
     buildType(Build)
+    buildType(Package)
+
+    sequential {
+        buildType(Build)
+        buildType(Package)
+    }
 }
 
 object Build : BuildType({
@@ -40,14 +46,37 @@ object Build : BuildType({
 
     steps {
         maven {
-            val  myMavenGoal = "clean test"
+            val  myMavenGoal = "clean compile"
             goals = myMavenGoal
             runnerArgs = "-Dmaven.test.failure.ignore=true"
         }
     }
+
+})
+
+object Package : BuildType({
+    name = "Package"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        maven {
+            val  myMavenGoal = "clean package"
+            goals = myMavenGoal
+            runnerArgs = "-Dmaven.test.failure.ignore=true -DskipTests"
+        }
+    }
+
+   // dependencies{
+   //    snapshot(Build){}
+   // }
 
     triggers {
         vcs {
         }
     }
 })
+
+
