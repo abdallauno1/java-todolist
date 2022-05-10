@@ -1,6 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -45,6 +46,14 @@ project {
     }
 
 } // end project
+
+object CustVcsRoot: GitVcsRoot({
+
+    name = DslContext.getParameter("vcsName")
+    url = DslContext.getParameter("vcsUrl")
+    branch = DslContext.getParameter("vcsBranch", defaultValue="refs/heads/main")
+
+})
 
 class Maven(name:String, goals:String, runnerArgs: String? = null): BuildType ({
     id(name.toId())
