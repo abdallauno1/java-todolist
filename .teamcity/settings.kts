@@ -29,6 +29,8 @@ version = "2022.04"
 
 project {
 
+    vcsRoot(CustVcsRoot)
+
     val bts = sequential {
         buildType(Maven("Build","clean compile"))
         parallel {
