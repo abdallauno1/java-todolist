@@ -65,7 +65,7 @@
 
     document.getElementById("deploy").addEventListener("click", function() {
         var xhr = new XMLHttpRequest();
-        xhr.open("PUT", "http://localhost:8080/deploy", true);
+        xhr.open("PUT", "http://localhost:8181/deploy", true);
         xhr.send("hello");
 
         document.getElementById("message").classList.toggle("d-none");
